@@ -1,0 +1,231 @@
+
+UC 8 --
+      Ability to extend
+employee_payroll data to
+store employee information
+like employee phone, address
+and department - Ensure employee department is non
+nullable fields.
+- Add Default Value for address field.
+
+
+mysql> create database employee_payroll;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++----------------------+
+| Database             |
++----------------------+
+| address_book_service |
+| college              |
+| employee_payroll     |
+| information_schema   |
+| mysql                |
+| payroll_service      |
+| performance_schema   |
+| rfp                  |
+| rfp11                |
+| rfp12                |
+| rfp155               |
+| sakila               |
+| sys                  |
+| tanuja               |
+| world                |
++----------------------+
+15 rows in set (0.01 sec)
+
+mysql> use employee_payroll;
+Database changed
+
+mysql> create table employee_payroll(emphonenum VARCHAR(30), empaddress VARCHAR(55), empdepartment VARCHAR(20)NOT NULL);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++----------------------------+
+| Tables_in_employee_payroll |
++----------------------------+
+| employee_payroll           |
++----------------------------+
+1 row in set (0.01 sec)
+
+mysql> describe employee_payroll;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| emphonenum    | varchar(30) | YES  |     | NULL    |       |
+| empaddress    | varchar(55) | YES  |     | NULL    |       |
+| empdepartment | varchar(20) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+===============================================================================================================================================================
+
+UC 9--
+         Ability to extend
+employee_payroll table
+to have Basic Pay,
+Deductions, Taxable Pay,
+Income Tax, Net Pay
+
+mysql> alter table employee_payroll add Basic_pay double;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add Deductions double;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add Taxable_pay double;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add Income_tax double;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add Net_pay double;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employee_payroll;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| id               | int         | NO   | PRI | NULL    | auto_increment |
+| name             | varchar(55) | YES  |     | NULL    |                |
+| gender           | char(1)     | YES  |     | NULL    |                |
+| taxable_pay      | double      | NO   |     | NULL    |                |
+| salary           | double      | YES  |     | NULL    |                |
+| deductions       | double      | NO   |     | NULL    |                |
+| start            | date        | YES  |     | NULL    |                |
+| basic_pay        | double      | NO   |     | NULL    |                |
+| employee_phone   | varchar(10) | YES  |     | NULL    |                |
+| income_tax       | double      | NO   |     | NULL    |                |
+| employee_address | varchar(55) | YES  |     | India   |                |
+| net_pay          | double      | NO   |     | NULL    |                |
+| department       | varchar(20) | NO   |     | NULL    |                |
++------------------+-------------+------+-----+---------+----------------+
+13 rows in set (0.00 sec)
+================================================================================================================================================================
+
+UC 10---
+           Ability to make Terissa as part of
+Sales and Marketing Department
+- Note: The Complete employee payroll
+roll need to be Inserted
+- If a Salary is now going to be updated
+multiple rows has to be updated
+creating unnecessary redundancy
+- Further There is 2 Employee ID so
+according to Database there is two
+different Terissa
+
+
+mysql> describe employee_payroll;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| id               | int         | NO   | PRI | NULL    | auto_increment |
+| name             | varchar(55) | YES  |     | NULL    |                |
+| gender           | char(1)     | YES  |     | NULL    |                |
+| taxable_pay      | double      | NO   |     | NULL    |                |
+| salary           | double      | YES  |     | NULL    |                |
+| deductions       | double      | NO   |     | NULL    |                |
+| start            | date        | YES  |     | NULL    |                |
+| basic_pay        | double      | NO   |     | NULL    |                |
+| employee_phone   | varchar(10) | YES  |     | NULL    |                |
+| income_tax       | double      | NO   |     | NULL    |                |
+| employee_address | varchar(55) | YES  |     | India   |                |
+| net_pay          | double      | NO   |     | NULL    |                |
+| department       | varchar(20) | NO   |     | NULL    |                |
++------------------+-------------+------+-----+---------+----------------+
+13 rows in set (0.00 sec)
+
+mysql> insert into employee_payroll(name, gender, taxable_pay, salary, deductions,start,basic_pay,employee_phone,income_tax,employee_address,net_pay,department) values('Teju','F',200000,400000000,5000,'2018-01-03',8000,'123456789',5000,'Pune',1234000000000,'Sales');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee_payroll where name ='Teju';
++----+------+--------+-------------+-----------+------------+------------+-----------+----------------+------------+------------------+---------------+------------+
+| id | name | gender | taxable_pay | salary    | deductions | start      | basic_pay | employee_phone | income_tax | employee_address | net_pay       | department |
++----+------+--------+-------------+-----------+------------+------------+-----------+----------------+------------+------------------+---------------+------------+
+|  6 | Teju | F      |      200000 | 400000000 |       5000 | 2018-01-03 |      8000 | 123456789      |       5000 | Pune             | 1234000000000 | Sales      |
++----+------+--------+-------------+-----------+------------+------------+-----------+----------------+------------+------------------+---------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee_payroll where name ='Teju';
++----+------+--------+-------------+-----------+------------+------------+-----------+----------------+------------+------------------+---------------+------------+
+| id | name | gender | taxable_pay | salary    | deductions | start      | basic_pay | employee_phone | income_tax | employee_address | net_pay       | department |
++----+------+--------+-------------+-----------+------------+------------+-----------+----------------+------------+------------------+---------------+------------+
+|  2 | Teju | F      |      347000 | 784529000 |       4000 | 2019-11-13 |      2000 | 987654321      |       2000 | Mumbai           | 123400        |Marketting  |
++----+------+--------+-------------+-----------+------------+------------+-----------+----------------+------------+------------------+---------------+------------+
+1 row in set (0.00 sec)
+
+=============================================================================================================================================================
+
+UC 11--
+          Implement the ER Diagram
+into Payroll Service DB - Create the corresponding tables as
+identified in the ER Diagram along
+with attributes
+- For Many to Many relationship,
+create new Table called Employee
+Department having Employee Id and
+Department ID and redo the UC 7
+
+use payroll_service;
+create table employee_payroll(emphonenum VARCHAR(30), empaddress VARCHAR(55), empdepartment VARCHAR(20),id int primary key, name varchar(55));
+create table student_payroll(id int, name varchar(55), start date, contactnum varchar(25), city varchar(40),primary key(id), foreign key(id)references employee_payroll(id));
+====================================================================================================================================================================================
+                    
+                  Section 3
+ UC 1
+        Ability to create a payroll service
+database and have java program
+connect to database
+- Use the payroll_service database created in MySQL
+- Download and register the jdbc driver jar to your Build
+Path in Eclipse
+- Alternatively use Maven or Gradle to add jdbc driver to
+your project
+- Check if the Driver Class is available for the java
+program
+- Check all the drivers registered with the jdbc driver
+- Check if the database connection to payroll_service
+mysql DB is established
+
+Code-------
+
+import java.sql.*;
+
+public class StudentDemo {
+    public static void connectingToDatabase() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/Payroll_service";
+        String username = "root";
+        String password = "Tanuja@99";
+        Connection con = DriverManager.getConnection(url, username, password);
+
+        Statement statement = con.createStatement();
+
+        String query = "SELECT * FROM employee_payroll;";
+
+        ResultSet result = statement.executeQuery(query);
+        while (result.next()) {
+            System.out.println(result.getInt("id") + " " + result.getString("name") + " "
+                    + result.getString("gender")+" " + result.getString("department"));
+        }
+        con.close();
+    }
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        connectingToDatabase();
+
+    }
+}
+====================================================================================================================================================================
+
+
+
+
+
+
+
